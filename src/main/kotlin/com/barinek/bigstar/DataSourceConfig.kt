@@ -14,12 +14,18 @@ open class DataSourceConfig {
 
     @Bean
     open fun getJdbcTemplate(): JdbcTemplate {
-        val dataSource = HikariDataSource()
-        dataSource.jdbcUrl = from(containerJson)
-        return JdbcTemplate(dataSource)
+        return JdbcTemplate(getDataSource())
     }
 
-    fun from(json: String): String? {
+    fun getDataSource(): HikariDataSource {
+        val json = if (System.getenv("VCAP_SERVICES") != null) System.getenv("VCAP_SERVICES") else containerJson
+
+        val dataSource = HikariDataSource()
+        dataSource.jdbcUrl = from(json)
+        return dataSource
+    }
+
+    private fun from(json: String): String? {
         val mapper = ObjectMapper()
         val root = mapper.readTree(json)
         val mysql = root.findValue("p-mysql")

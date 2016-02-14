@@ -2,18 +2,12 @@ package com.barinek.bigstar
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import java.util.*
 
-class MetricsDataGatewayTest {
+open class MetricsDataGatewayTest : TestDatabaseSupport() {
     @Test
     fun testCalculateMetrics() {
-        val properties = Properties()
-        properties.load(javaClass.getResourceAsStream("/test.properties"))
-
-        val config = DataSourceConfig()
-        config.containerJson = properties.getProperty("container.json")
-        val metrics = MetricsDataGateway(config.getJdbcTemplate()).calculateMetrics()
-        assertEquals(10, metrics.numberOfAccounts)
-        assertEquals(100.00, metrics.totalAccountValue, 0.0)
+        val metrics = MetricsDataGateway(jdbcTemplate()).calculateMetrics()
+        assertEquals(3, metrics.numberOfAccounts)
+        assertEquals(7400000.00, metrics.totalContractValue, 0.0)
     }
 }

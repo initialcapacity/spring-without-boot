@@ -14,13 +14,12 @@ class MetricsDataGateway {
     }
 
     fun calculateMetrics(): Metrics {
-        jdbcTemplate.queryForObject("select 10 as number_of_accounts, 100.00 as total_account_value",
+        return jdbcTemplate.queryForObject("select count(1) as number_of_accounts, sum(total_contract_value) as total_contract_value from accounts",
                 { rs, rowNum ->
                     Metrics(
                             rs.getInt("number_of_accounts"),
-                            rs.getDouble("total_account_value"))
+                            rs.getDouble("total_contract_value"))
                 }
         )
-        return Metrics(10, 100.00)
     }
 }

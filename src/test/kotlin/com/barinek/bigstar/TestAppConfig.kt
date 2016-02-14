@@ -6,13 +6,13 @@ import org.springframework.context.annotation.Profile
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
 import org.springframework.core.io.ClassPathResource
 
-@Configuration
-open class AppConfig {
-    @Profile("default")
+@Configuration()
+open class TestAppConfig {
+    @Profile("test")
     @Bean
     open fun propertySourcesPlaceholderConfigurer(): PropertySourcesPlaceholderConfigurer {
         val configurer = PropertySourcesPlaceholderConfigurer()
-        configurer.setLocations(ClassPathResource("default.properties"))
+        configurer.setLocations(ClassPathResource("test.properties"))
         return configurer
     }
 }

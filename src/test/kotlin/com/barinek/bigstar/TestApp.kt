@@ -9,7 +9,7 @@ import org.apache.http.impl.client.DefaultHttpClient
 import org.apache.http.message.BasicNameValuePair
 import java.net.URISyntaxException
 
-open class AppRunner {
+open class TestApp : TestDatabaseSupport() {
     @Throws(java.io.IOException::class, URISyntaxException::class)
     protected fun doGet(endpoint: String, vararg pairs: BasicNameValuePair): String {
         val builder = URIBuilder(endpoint)
@@ -17,9 +17,7 @@ open class AppRunner {
             builder.addParameter(pair.name, pair.value)
         }
         val get = HttpGet(builder.build())
-        val client = DefaultHttpClient()
-        val handler = BasicResponseHandler()
-        return client.execute(get, handler)
+        return DefaultHttpClient().execute(get, BasicResponseHandler())
     }
 
     @Throws(java.io.IOException::class)
@@ -27,13 +25,17 @@ open class AppRunner {
         val post = HttpPost(endpoint)
         post.addHeader("Content-type", "application/json")
         post.entity = StringEntity(data)
-        val client = DefaultHttpClient()
-        val handler = BasicResponseHandler()
-        return client.execute(post, handler)
+        return DefaultHttpClient().execute(post, BasicResponseHandler())
+    }
+
+    class TestApp : App(){
+        override fun getProperties(): String {
+            return "/test.properties"
+        }
     }
 
     companion object {
-        protected var app: App = App()
+        protected var app: App = TestApp()
 
         init {
             try {

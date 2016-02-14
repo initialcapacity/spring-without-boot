@@ -14,17 +14,17 @@ import java.io.IOException
 import java.sql.SQLException
 import java.util.*
 
-class App @Throws(IOException::class, ClassNotFoundException::class, SQLException::class)
+open class App @Throws(IOException::class, ClassNotFoundException::class, SQLException::class)
 
 constructor() {
     private val server: Server
 
     init {
         val properties = Properties()
-        properties.load(javaClass.getResourceAsStream("/default.properties"))
+        properties.load(javaClass.getResourceAsStream(getProperties()))
 
         val list = HandlerList()
-        list.addHandler(getServletContextHandler(getContext()))
+        list.addHandler(getServletContextHandler(getContext(properties.getProperty("spring.profile"))))
 
         server = Server(tryPort(Integer.parseInt(properties.getProperty("server.port"))))
         server.handler = list
@@ -44,6 +44,8 @@ constructor() {
         })
     }
 
+    open fun getProperties() = "/default.properties"
+
     private fun getServletContextHandler(context: WebApplicationContext): Handler? {
         val contextHandler = ServletContextHandler()
         contextHandler.contextPath = "/"
@@ -52,8 +54,9 @@ constructor() {
         return contextHandler
     }
 
-    private fun getContext(): WebApplicationContext {
+    private fun getContext(profile: String): WebApplicationContext {
         val context = AnnotationConfigWebApplicationContext()
+        context.environment.setActiveProfiles(profile)
         context.setConfigLocation("com.barinek.bigstar")
         return context
     }

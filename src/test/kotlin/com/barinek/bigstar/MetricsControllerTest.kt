@@ -4,12 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class MetricsControllerTest : AppRunner() {
+open class MetricsControllerTest : TestApp() {
     @Test
     fun testGetMetrics() {
-        val response = doGet("http://localhost:8080/api/metrics")
+        val response = doGet("http://localhost:8081/api/metrics")
         val metrics = ObjectMapper().readValue(response, Metrics::class.java)
-        assertEquals(10, metrics.numberOfAccounts)
-        assertEquals(100.00, metrics.totalAccountValue, 0.0)
+        assertEquals(3, metrics.numberOfAccounts)
+        assertEquals(7400000.00, metrics.totalContractValue, 0.0)
     }
 }
