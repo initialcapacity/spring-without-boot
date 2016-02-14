@@ -1,5 +1,6 @@
 package com.barinek.bigstar
 
-import java.math.BigDecimal
-
-class Metrics(val numberOfAccounts:Int, val totalAccountValue: BigDecimal)
+data class Metrics(val numberOfAccounts: Int, val totalAccountValue: Double) {
+    constructor() : this(0, 0.00) {
+    }
+}

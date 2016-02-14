@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate
 @Configuration
 open class DataSourceConfig {
     @Value("\${container.json}")
-    private val containerJson: String = ""
+    var containerJson: String = ""
 
     @Bean
     open fun getJdbcTemplate(): JdbcTemplate {
