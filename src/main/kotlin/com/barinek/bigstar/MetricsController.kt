@@ -14,7 +14,5 @@ class MetricsController {
     }
 
     @RequestMapping("/api/metrics")
-    fun getMetrics(): Metrics {
-        return gateway.calculateMetrics();
-    }
+    fun getMetrics() = gateway.calculateMetrics()
 }

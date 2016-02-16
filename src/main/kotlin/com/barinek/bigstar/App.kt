@@ -17,6 +17,7 @@ import java.util.*
 open class App @Throws(IOException::class, ClassNotFoundException::class, SQLException::class)
 
 constructor() {
+    private val logger = LoggerFactory.getLogger(App::class.java)
     private val server: Server
 
     init {
@@ -30,35 +31,33 @@ constructor() {
         server.handler = list
         server.stopAtShutdown = true;
 
-        Runtime.getRuntime().addShutdownHook(object : Thread() {
-            override fun run() {
-                try {
-                    if (server.isRunning) {
-                        server.stop()
-                    }
-                    logger.info("App shutdown.")
-                } catch (e: Exception) {
-                    logger.info("Error shutting down app.", e)
+        Runtime.getRuntime().addShutdownHook(Thread({
+            try {
+                if (server.isRunning) {
+                    server.stop()
                 }
+                logger.info("App shutdown.")
+            } catch (e: Exception) {
+                logger.info("Error shutting down app.", e)
             }
-        })
+        }))
     }
 
     open fun getProperties() = "/default.properties"
 
-    private fun getServletContextHandler(context: WebApplicationContext): Handler? {
-        val contextHandler = ServletContextHandler()
-        contextHandler.contextPath = "/"
-        contextHandler.addServlet(ServletHolder(DispatcherServlet(context)), "/*")
-        contextHandler.addEventListener(ContextLoaderListener(context))
-        return contextHandler
+    private fun getServletContextHandler(context: WebApplicationContext): Handler {
+        return ServletContextHandler().apply {
+            contextPath = "/"
+            addServlet(ServletHolder(DispatcherServlet(context)), "/*")
+            addEventListener(ContextLoaderListener(context))
+        }
     }
 
     private fun getContext(profile: String): WebApplicationContext {
-        val context = AnnotationConfigWebApplicationContext()
-        context.environment.setActiveProfiles(profile)
-        context.setConfigLocation("com.barinek.bigstar")
-        return context
+        return AnnotationConfigWebApplicationContext().apply {
+            environment.setActiveProfiles(profile)
+            setConfigLocation("com.barinek.bigstar")
+        }
     }
 
     @Throws(Exception::class)

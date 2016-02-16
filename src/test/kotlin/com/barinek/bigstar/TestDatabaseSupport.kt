@@ -3,7 +3,6 @@ package com.barinek.bigstar
 import org.flywaydb.core.Flyway
 import org.junit.After
 import org.junit.Before
-import org.springframework.jdbc.core.JdbcTemplate
 import java.util.*
 
 open class TestDatabaseSupport {
@@ -24,9 +23,7 @@ open class TestDatabaseSupport {
         flyway.migrate()
     }
 
-    fun jdbcTemplate(): JdbcTemplate {
-        return config.getJdbcTemplate()
-    }
+    fun jdbcTemplate() = config.getJdbcTemplate()
 
     @After
     fun tearDown() {

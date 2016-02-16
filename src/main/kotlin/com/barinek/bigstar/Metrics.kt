@@ -1,6 +1,3 @@
 package com.barinek.bigstar
 
-data class Metrics(val numberOfAccounts: Int, val totalContractValue: Double) {
-    constructor() : this(0, 0.00) {
-    }
-}
+data class Metrics(val numberOfAccounts: Int = 0, val totalContractValue: Double = 0.00)

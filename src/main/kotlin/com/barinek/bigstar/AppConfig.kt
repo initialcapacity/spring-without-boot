@@ -10,9 +10,7 @@ import org.springframework.core.io.ClassPathResource
 open class AppConfig {
     @Profile("default")
     @Bean
-    open fun propertySourcesPlaceholderConfigurer(): PropertySourcesPlaceholderConfigurer {
-        val configurer = PropertySourcesPlaceholderConfigurer()
-        configurer.setLocations(ClassPathResource("default.properties"))
-        return configurer
+    open fun propertySourcesPlaceholderConfigurer() = PropertySourcesPlaceholderConfigurer().apply {
+        setLocations(ClassPathResource("default.properties"))
     }
 }
