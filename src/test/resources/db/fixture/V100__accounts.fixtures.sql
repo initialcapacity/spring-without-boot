@@ -1,1 +1,0 @@
-insert into accounts (name, total_contract_value) values ('John\'s Grocery, Inc.', 6000000), ('Hamburg Inn No. 2', 0), ('Record Collector', 1400000);

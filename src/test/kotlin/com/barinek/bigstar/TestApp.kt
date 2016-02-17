@@ -28,11 +28,7 @@ open class TestApp : TestDatabaseSupport() {
         return DefaultHttpClient().execute(post, BasicResponseHandler())
     }
 
-    class TestApp : App(){
-        override fun getProperties(): String {
-            return "/test.properties"
-        }
-    }
+    class TestApp : App()
 
     companion object {
         protected var app: App = TestApp()

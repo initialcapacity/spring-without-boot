@@ -12,7 +12,6 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.servlet.DispatcherServlet
 import java.io.IOException
 import java.sql.SQLException
-import java.util.*
 
 open class App @Throws(IOException::class, ClassNotFoundException::class, SQLException::class)
 
@@ -21,13 +20,10 @@ constructor() {
     private val server: Server
 
     init {
-        val properties = Properties()
-        properties.load(javaClass.getResourceAsStream(getProperties()))
-
         val list = HandlerList()
-        list.addHandler(getServletContextHandler(getContext(properties.getProperty("spring.profile"))))
+        list.addHandler(getServletContextHandler(getContext()))
 
-        server = Server(tryPort(Integer.parseInt(properties.getProperty("server.port"))))
+        server = Server(Integer.parseInt(System.getenv("PORT")))
         server.handler = list
         server.stopAtShutdown = true;
 
@@ -43,8 +39,6 @@ constructor() {
         }))
     }
 
-    open fun getProperties() = "/default.properties"
-
     private fun getServletContextHandler(context: WebApplicationContext): Handler {
         return ServletContextHandler().apply {
             contextPath = "/"
@@ -53,9 +47,8 @@ constructor() {
         }
     }
 
-    private fun getContext(profile: String): WebApplicationContext {
+    private fun getContext(): WebApplicationContext {
         return AnnotationConfigWebApplicationContext().apply {
-            environment.setActiveProfiles(profile)
             setConfigLocation("com.barinek.bigstar")
         }
     }
@@ -66,13 +59,7 @@ constructor() {
         server.start()
     }
 
-    private fun tryPort(defaultPort: Int): Int {
-        return if (System.getenv("PORT") != null) Integer.parseInt(System.getenv("PORT")) else defaultPort
-    }
-
     companion object {
-        private val logger = LoggerFactory.getLogger(App::class.java)
-
         @Throws(Exception::class)
         @JvmStatic fun main(args: Array<String>) {
             App().start()

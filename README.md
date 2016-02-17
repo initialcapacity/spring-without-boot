@@ -24,6 +24,16 @@ gradle -q dependencies --configuration runtime
 \--- org.jetbrains.kotlin:kotlin-stdlib:1.0.0-rc-1036
 ```
 
+## Deployment environment
+
+The application assumes you're deploying to a platform as a service. You'll need the below environment variables to both run and test the application.
+
+```
+PORT=8080
+
+VCAP_SERVICES={ \"services\": { \"p-mysql\": [ { \"credentials\": { \"jdbcUrl\": \"jdbc:mysql://localhost:3306/bigstar_test?user=root&password=\" } } ] } }
+```
+
 ## Database Setup
 
 The example app uses MySQL
@@ -44,7 +54,7 @@ gradle -Pflyway.url="jdbc:mysql://localhost:3306/bigstar_development?user=root&p
 
 ## Testing
 
-Once the database is migrated, test using the below
+Once the test database is migrated, test using the below
 
 ```
 gradle clean test

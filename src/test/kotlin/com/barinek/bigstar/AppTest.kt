@@ -6,7 +6,8 @@ import org.junit.Test
 class AppTest : TestApp() {
     @Test
     fun testStart() {
-        val response = doGet("http://localhost:8081/index.html")
+        val port = Integer.parseInt(System.getenv("PORT"))
+        val response = doGet("http://localhost:$port/index.html")
         assertTrue(response.contains("Hello World!"))
     }
 }
