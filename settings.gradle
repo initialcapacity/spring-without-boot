@@ -1,2 +1,6 @@
-rootProject.name="bigstar"
+rootProject.name = "bigstar"
 
+include "applications:bigstar-server"
+include "components:jdbc-support"
+include "components:metrics"
+include "components:rest-support"

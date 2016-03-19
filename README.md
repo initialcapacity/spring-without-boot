@@ -3,7 +3,7 @@
 kotlin-jetty-spring example with a small set of runtime dependencies
 
 ```
-gradle -q dependencies --configuration runtime
+gradle -q :applications:bigstar-server:dependencies --configuration runtime
 
 +--- com.fasterxml.jackson.core:jackson-core:2.5.4
 +--- com.fasterxml.jackson.core:jackson-databind:2.5.4
@@ -19,7 +19,6 @@ gradle -q dependencies --configuration runtime
 +--- org.slf4j:slf4j-api:1.7.5 -> 1.7.10
 +--- org.slf4j:slf4j-simple:1.7.5
 +--- mysql:mysql-connector-java:5.1.26
-+--- org.flywaydb:flyway-core:3.2.1
 +--- javax.servlet:javax.servlet-api:3.1.0
 \--- org.jetbrains.kotlin:kotlin-stdlib:1.0.0-rc-1036
 ```

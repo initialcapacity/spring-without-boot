@@ -1,78 +1,18 @@
-group "com.barinek"
-version "1.0-SNAPSHOT"
+subprojects {
+    defaultTasks "clean", "build"
 
-apply plugin: 'kotlin'
-apply plugin: 'org.flywaydb.flyway'
-
-repositories {
-    maven { url "http://repo.maven.apache.org/maven2" }
-    mavenCentral()
-}
-
-buildscript {
-    ext.kotlin_version = '1.0.0-rc-1036'
-    ext.spring_version = "4.1.8.RELEASE"
+    buildscript {
+        repositories {
+            mavenCentral()
+        }
+    }
 
     repositories {
         mavenCentral()
     }
 
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
-        classpath 'org.flywaydb:flyway-gradle-plugin:3.2.1'
-    }
-}
-
-dependencies {
-    compile 'com.fasterxml.jackson.core:jackson-core:2.5.4'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.5.4'
-    compile 'com.fasterxml.jackson.core:jackson-annotations:2.5.4'
-
-    compile 'org.springframework:spring-context:$spring_version'
-    compile "org.springframework:spring-webmvc:$spring_version"
-    compile "org.springframework:spring-jdbc:$spring_version"
-
-    compile 'javax.inject:javax.inject:1'
-
-    compile group: 'com.zaxxer', name: 'HikariCP', version: '2.3.7'
-
-    compile group: 'org.apache.commons', name: 'commons-io', version: '1.3.2'
-    compile group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.3.0.M2'
-    compile group: 'org.eclipse.jetty', name: 'jetty-servlet', version: '9.3.0.M2'
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.5'
-    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.5'
-
-    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.26'
-
-    compile 'org.flywaydb:flyway-core:3.2.1'
-
-    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
-
-    testCompile group: 'junit', name: 'junit', version: '4.11'
-    testCompile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.2.5'
-    testCompile group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.3'
-
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-}
-
-sourceSets {
-    main.java.srcDirs += 'src/main/kotlin'
-    test.java.srcDirs += 'src/test/kotlin'
-}
-
-test {
-    testLogging {
-        events "passed", "skipped", "failed"
-        showStandardStreams = true
-    }
-}
-
-jar {
-    manifest {
-        attributes "Main-Class": "com.barinek.bigstar.App"
-    }
-    from {
-        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    ext {
+        spring_version = "4.1.8.RELEASE"
+        kotlin_version = '1.0.0-rc-1036'
     }
 }
