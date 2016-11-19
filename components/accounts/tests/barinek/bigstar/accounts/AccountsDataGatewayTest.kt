@@ -1,20 +1,19 @@
-package io.barinek.bigstar
+package barinek.bigstar.accounts
 
-import com.fasterxml.jackson.databind.ObjectMapper
+import io.barinek.bigstar.accounts.AccountsDataGateway
 import io.barinek.bigstar.jdbc.DataSourceConfig
-import io.barinek.bigstar.metrics.Metrics
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-open class MetricsControllerTest : TestApp() {
+open class AccountsDataGatewayTest {
     @Before
     fun setUp() {
         DataSourceConfig().getJdbcTemplate().execute("delete from accounts")
     }
 
     @Test
-    fun testGetMetrics() {
+    fun testGetAccounts() {
         DataSourceConfig().getJdbcTemplate().update("""
             insert into accounts (name, total_contract_value)
              values
@@ -23,10 +22,7 @@ open class MetricsControllerTest : TestApp() {
              ('Record Collector', 1400000)
         """)
 
-        val port = Integer.parseInt(System.getenv("PORT"))
-        val response = doGet("http://localhost:$port/api/metrics")
-        val metrics = ObjectMapper().readValue(response, Metrics::class.java)
-        assertEquals(3, metrics.numberOfAccounts)
-        assertEquals(7400000.00, metrics.totalContractValue, 0.0)
+        val accounts = AccountsDataGateway(DataSourceConfig().getJdbcTemplate()).getAccounts()
+        assertEquals(3, accounts.size)
     }
 }

@@ -11,6 +11,10 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.servlet.DispatcherServlet
 
 open class App : BasicApp() {
+    override fun getPort(): Int {
+        return Integer.parseInt(System.getenv("PORT"))
+    }
+
     override fun handlerList(): HandlerList {
         val list = HandlerList()
         list.addHandler(getServletContextHandler(getContext()))

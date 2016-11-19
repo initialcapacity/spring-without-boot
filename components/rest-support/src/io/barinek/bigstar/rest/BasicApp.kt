@@ -12,7 +12,7 @@ constructor() {
     init {
         val list = handlerList()
 
-        server = Server(Integer.parseInt(System.getenv("PORT")))
+        server = Server(getPort())
         server.handler = list
         server.stopAtShutdown = true;
 
@@ -28,11 +28,19 @@ constructor() {
         }))
     }
 
+    protected abstract fun getPort(): Int
+
     protected abstract fun handlerList(): HandlerList
 
     @Throws(Exception::class)
     fun start() {
         logger.info("App started.")
         server.start()
+    }
+
+    @Throws(Exception::class)
+    fun stop() {
+        logger.info("App stopped.")
+        server.stop()
     }
 }

@@ -1,6 +1,7 @@
-package io.barinek.bigstar.metrics
+package barinek.bigstar.metrics
 
 import io.barinek.bigstar.jdbc.DataSourceConfig
+import io.barinek.bigstar.metrics.MetricsDataGateway
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
