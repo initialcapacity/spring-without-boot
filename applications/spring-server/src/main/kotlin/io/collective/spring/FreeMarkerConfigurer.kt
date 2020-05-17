@@ -8,18 +8,14 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver
 @Configuration
 open class FreeMarkerConfigurer {
     @Bean
-    open fun freemarkerConfig() : FreeMarkerConfigurer {
-        val configurer = FreeMarkerConfigurer()
-        configurer.setTemplateLoaderPaths("classpath:/templates/")
-        return configurer
+    open fun freemarkerConfig(): FreeMarkerConfigurer = FreeMarkerConfigurer().apply {
+        setTemplateLoaderPaths("classpath:/templates/")
     }
 
     @Bean
-    open fun freemarkerViewResolver(): FreeMarkerViewResolver? {
-        val resolver = FreeMarkerViewResolver()
-        resolver.isCache = true
-        resolver.setPrefix("")
-        resolver.setSuffix(".ftl")
-        return resolver
+    open fun freemarkerViewResolver(): FreeMarkerViewResolver = FreeMarkerViewResolver().apply {
+        isCache = true
+        setPrefix("")
+        setSuffix(".ftl")
     }
 }

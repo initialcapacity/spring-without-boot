@@ -4,7 +4,7 @@ import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.server.handler.HandlerList
 import org.slf4j.LoggerFactory
 
-abstract class BasicApp(val port: Int) {
+abstract class BasicApp(private val port: Int) {
     private val logger = LoggerFactory.getLogger(javaClass)
     private lateinit var server: Server
 
