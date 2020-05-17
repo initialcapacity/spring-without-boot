@@ -2,6 +2,7 @@ dependencies {
     compile project(":components:jdbc-support")
     compile project(":components:rest-support")
 
-    compile "org.springframework:spring-webmvc:$spring_version"
+    compile "io.dropwizard.metrics:metrics-core:4.1.5"
     compile "javax.inject:javax.inject:1"
+    compile "org.springframework:spring-webmvc:$spring_version"
 }

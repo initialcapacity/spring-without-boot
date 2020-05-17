@@ -1,25 +1,5 @@
-buildscript {
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin_version}"
-    }
-}
-
-apply plugin: 'kotlin'
-
-sourceSets {
-    main.kotlin.srcDir "src"
-    test.kotlin.srcDir "tests"
-}
-
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"
-
-    compile "org.springframework:spring-context:$spring_version"
     compile "org.springframework:spring-jdbc:$spring_version"
-
-    compile 'com.fasterxml.jackson.core:jackson-core:2.5.4'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.5.4'
-    compile 'com.fasterxml.jackson.core:jackson-annotations:2.5.4'
-
-    compile group: 'com.zaxxer', name: 'HikariCP', version: '2.3.7'
+    compile "com.zaxxer:HikariCP:3.4.5"
+    compile 'org.postgresql:postgresql:42.2.10'
 }
