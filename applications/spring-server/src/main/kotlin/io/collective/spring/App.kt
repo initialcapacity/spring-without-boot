@@ -12,24 +12,18 @@ import org.springframework.web.servlet.DispatcherServlet
 import java.util.*
 
 class App(port: Int) : BasicApp(port) {
-    override fun handlerList(): HandlerList {
-        val list = HandlerList()
-        list.addHandler(getServletContextHandler(getContext()))
-        return list
+    override fun handlerList(): HandlerList = HandlerList().apply {
+        addHandler(getServletContextHandler(getContext()))
     }
 
-    private fun getServletContextHandler(context: WebApplicationContext): Handler {
-        return ServletContextHandler().apply {
-            contextPath = "/"
-            addServlet(ServletHolder(DispatcherServlet(context)), "/*")
-            addEventListener(ContextLoaderListener(context))
-        }
+    private fun getServletContextHandler(context: WebApplicationContext): Handler = ServletContextHandler().apply {
+        contextPath = "/"
+        addServlet(ServletHolder(DispatcherServlet(context)), "/*")
+        addEventListener(ContextLoaderListener(context))
     }
 
-    private fun getContext(): WebApplicationContext {
-        return AnnotationConfigWebApplicationContext().apply {
-            setConfigLocation("io.collective.spring")
-        }
+    private fun getContext(): WebApplicationContext = AnnotationConfigWebApplicationContext().apply {
+        setConfigLocation("io.collective.spring")
     }
 }
 

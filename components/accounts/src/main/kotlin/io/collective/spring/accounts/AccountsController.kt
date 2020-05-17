@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class AccountsController constructor(private val gateway: AccountsDataGateway) {
+class AccountsController(private val gateway: AccountsDataGateway) {
 
     @RequestMapping("/api/accounts")
     fun getAccounts() = gateway.getAccounts()

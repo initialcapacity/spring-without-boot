@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets
 import java.util.concurrent.TimeUnit
 
 @RestController
-class MetricsController constructor(private val registry: MetricRegistry) {
+class MetricsController(private val registry: MetricRegistry) {
 
     @RequestMapping("/api/metrics")
     fun metrics(): String {

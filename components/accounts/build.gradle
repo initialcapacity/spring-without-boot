@@ -3,5 +3,4 @@ dependencies {
     compile project(":components:rest-support")
 
     compile "org.springframework:spring-webmvc:$spring_version"
-    compile "javax.inject:javax.inject:1"
 }

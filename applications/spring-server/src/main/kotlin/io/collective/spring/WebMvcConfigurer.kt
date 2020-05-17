@@ -28,7 +28,5 @@ open class WebMvcConfigurer : WebMvcConfigurer {
     }
 
     @Bean
-    open fun metricRegistry(): MetricRegistry {
-        return MetricRegistry()
-    }
+    open fun metricRegistry(): MetricRegistry = MetricRegistry()
 }
