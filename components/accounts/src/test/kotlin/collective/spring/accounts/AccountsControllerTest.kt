@@ -3,7 +3,7 @@ package collective.spring.accounts
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.collective.spring.jdbc.DataSourceConfig
 import io.collective.spring.rest.BasicApp
-import io.collective.spring.rest.RestTemplate
+import io.collective.spring.rest.getForString
 import org.eclipse.jetty.server.Handler
 import org.eclipse.jetty.server.handler.HandlerList
 import org.eclipse.jetty.servlet.ServletContextHandler
@@ -15,6 +15,7 @@ import org.junit.Test
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.converter.HttpMessageConverter
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
+import org.springframework.web.client.RestTemplate
 import org.springframework.web.context.ContextLoaderListener
 import org.springframework.web.context.WebApplicationContext
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext
@@ -48,7 +49,7 @@ open class AccountsControllerTest() {
         """)
 
         val port = 8081
-        val response = RestTemplate().doGet("http://localhost:$port/api/accounts")
+        val response = RestTemplate().getForString("http://localhost:$port/api/accounts")
         val accounts = ObjectMapper().readValue(response, List::class.java)
         assertEquals(3, accounts.size)
     }
