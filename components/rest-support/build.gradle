@@ -1,5 +1,7 @@
 dependencies {
 
+    compile "org.springframework:spring-web:$spring_version"
+
     compile "org.eclipse.jetty:jetty-server:9.3.0.M2"
     compile "org.eclipse.jetty:jetty-servlet:9.3.0.M2"
 

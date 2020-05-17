@@ -2,14 +2,16 @@ package collective.spring
 
 import io.collective.spring.App
 import io.collective.spring.jdbc.DataSourceConfig
-import io.collective.spring.rest.RestTemplate
+import io.collective.spring.rest.getForString
 import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.springframework.web.client.RestTemplate
 
 class AppTest() {
     var app = App(8081)
+    var restTemplate = RestTemplate()
 
     @Before
     fun setUp() {
@@ -36,18 +38,18 @@ class AppTest() {
 
         val endpoint = "http://localhost:$port/"
 
-        var response = RestTemplate().doGet(endpoint)
+        var response = restTemplate.getForString(endpoint)
         assertTrue(response.contains("Spring without Boot"))
 
-        response = RestTemplate().doGet("$endpoint/about.html")
+        response = restTemplate.getForString("$endpoint/about.html")
         assertTrue(response.contains("unstyled about!"))
 
-        response = RestTemplate().doGet("$endpoint/api/accounts")
+        response = restTemplate.getForString("$endpoint/api/accounts")
         assertTrue(response.contains("John's Grocery, Inc."))
         assertTrue(response.contains("Hamburg Inn No. 2"))
         assertTrue(response.contains("Record Collector"))
 
-        response = RestTemplate().doGet("$endpoint/api/metrics")
+        response = restTemplate.getForString("$endpoint/api/metrics")
         assertTrue(response.contains("index-requests"))
         assertTrue(response.contains("count = 1"))
     }
