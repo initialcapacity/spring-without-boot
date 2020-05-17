@@ -18,6 +18,8 @@ plugins {
 }
 
 subprojects {
+    if (name == "applications" || name == "components") return
+
     group "io.collective.spring"
 
     apply plugin: 'kotlin'
