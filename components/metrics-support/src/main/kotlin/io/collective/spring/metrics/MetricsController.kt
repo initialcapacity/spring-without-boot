@@ -8,10 +8,9 @@ import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 import java.nio.charset.StandardCharsets
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
 @RestController
-class MetricsController @Inject constructor(private val registry: MetricRegistry) {
+class MetricsController constructor(private val registry: MetricRegistry) {
 
     @RequestMapping("/api/metrics")
     fun metrics(): String {
